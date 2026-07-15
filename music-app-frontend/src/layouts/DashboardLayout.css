@@ -1,0 +1,426 @@
+/* =========================
+   DASHBOARD LAYOUT
+========================= */
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background: #121212;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.dashboard-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+
+  background: #0f0f0f;
+  border-right: 1px solid #222;
+  color: white;
+}
+
+
+/* =========================
+   MAIN AREA
+========================= */
+
+.main-area {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar {
+  height: 70px;
+
+  background: #181818;
+  border-bottom: 2px solid #e11d48;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 24px;
+
+  color: white;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+  flex: 1;
+  padding: 24px;
+  color: white;
+
+  overflow-x: hidden;
+}
+
+
+/* =========================
+   DASHBOARD STATS
+========================= */
+
+.dashboard {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 20px;
+
+  width: 100%;
+}
+
+
+.stats-card {
+
+  background: #111;
+
+  border: 1px solid #222;
+
+  border-radius: 12px;
+
+  padding: 20px;
+
+  color: white;
+
+  transition: .3s ease;
+
+  cursor: pointer;
+}
+
+
+.stats-card:hover {
+
+  transform: translateY(-5px);
+
+  border-color: #ff0033;
+
+  box-shadow:
+  0 0 15px rgba(255,0,0,.2);
+}
+
+
+.stats-card h3 {
+
+  color:#aaa;
+
+  font-size:14px;
+
+  margin-bottom:10px;
+
+  text-transform:uppercase;
+}
+
+
+.stats-card p {
+
+  font-size:28px;
+
+  font-weight:bold;
+
+}
+
+
+/* =========================
+   SONG PAGE
+========================= */
+
+.songs-page {
+
+  width:100%;
+
+  max-width:1200px;
+
+  margin:auto;
+
+  padding:30px;
+
+}
+
+
+.songs-title {
+
+  margin-bottom:20px;
+
+  color:#ff0033;
+
+  font-size:24px;
+}
+
+
+/* =========================
+   SONG FORM
+========================= */
+
+.songs-form {
+
+  width:100%;
+
+  background:var(--card);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:var(--radius);
+
+  padding:24px;
+
+
+  display:grid;
+
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(200px,1fr));
+
+
+  gap:16px;
+
+
+  margin-bottom:40px;
+}
+
+
+
+.songs-input {
+
+  width:100%;
+
+  min-width:0;
+
+  padding:12px;
+
+
+  border-radius:8px;
+
+  border:1px solid #222;
+
+
+  background:#111;
+
+  color:white;
+
+  outline:none;
+
+}
+
+
+
+.songs-input::placeholder {
+
+  color:#777;
+
+}
+
+
+
+.songs-input:focus {
+
+  border-color:#ff0033;
+
+}
+
+
+
+/* BUTTON */
+
+.songs-form .songs-btn {
+
+  grid-column:1/-1;
+
+}
+
+
+
+.songs-btn {
+
+  width:100%;
+
+  padding:12px;
+
+
+  border:none;
+
+  border-radius:8px;
+
+
+  background:#ff0033;
+
+  color:white;
+
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+}
+
+
+
+.songs-btn:hover {
+
+  background:#cc002a;
+
+}
+
+
+
+/* =========================
+   SONG LIST TITLE
+========================= */
+
+
+.songs-section-title {
+
+  font-size:18px;
+
+  color:var(--muted);
+
+  margin-bottom:16px;
+
+  text-transform:uppercase;
+
+}
+
+
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.delete-btn {
+
+  margin-top:10px;
+
+  padding:10px;
+
+
+  border-radius:10px;
+
+  border:1px solid rgba(255,43,43,.4);
+
+
+  background:rgba(255,43,43,.1);
+
+  color:#ff2b2b;
+
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:.25s;
+}
+
+
+
+.delete-btn:hover {
+
+  background:#ff2b2b;
+
+  color:white;
+
+  transform:scale(1.03);
+
+}
+
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+
+@media(max-width:900px){
+
+
+  .dashboard-sidebar {
+
+    width:200px;
+
+  }
+
+
+  .content {
+
+    padding:15px;
+
+  }
+
+
+  .songs-page {
+
+    padding:20px;
+
+  }
+
+
+  .songs-form {
+
+    grid-template-columns:repeat(2,1fr);
+
+  }
+
+}
+
+
+
+@media(max-width:600px){
+
+
+  .dashboard-container {
+
+    flex-direction:column;
+
+  }
+
+
+  .dashboard-sidebar {
+
+    width:100%;
+
+  }
+
+
+  .topbar {
+
+    padding:0 15px;
+
+  }
+
+
+  .dashboard {
+
+    grid-template-columns:1fr;
+
+  }
+
+
+  .songs-form {
+
+    grid-template-columns:1fr;
+
+  }
+
+
+  .songs-page {
+
+    padding:15px;
+
+  }
+
+}
