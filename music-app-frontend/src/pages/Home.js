@@ -21,7 +21,7 @@ export default function Home() {
         setError("Failed to load songs");
         setLoading(false);
       });
-  }, []);
+  }, [API_KEY]);
   useEffect(() => {
   fetch(
     `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UC8L6h-8x3pT5wd106u2QpWQ&type=video&order=date&maxResults=8&key=${API_KEY}`

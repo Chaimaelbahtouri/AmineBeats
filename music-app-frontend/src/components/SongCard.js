@@ -1,4 +1,4 @@
-import { FaPlay, FaSpotify, FaYoutube } from "react-icons/fa";
+import {  FaSpotify, FaYoutube } from "react-icons/fa";
 
 export default function SongCard({ title, artist, youtubeUrl, spotifyUrl,coverImage }) {
   return (

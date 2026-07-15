@@ -7,9 +7,7 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const songCount = songs.length;
-    const totalViews = songs.reduce((acc, song)=>{
-        return acc + ((song.views )|| 0)
-    },0)
+    
     const now = new Date();
 
     const newThisMonth = songs.filter(song => {
