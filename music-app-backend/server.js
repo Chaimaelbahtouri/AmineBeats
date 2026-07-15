@@ -16,13 +16,13 @@ app.use("/images", express.static("public/images"));
 
 app.use('/api/auth',authRoutes)
 app.use('/api/songs',songRoutes)
-
-app.use('/',(err,req,res,next)=>{
+app.use((err,req,res,next)=>{
     res.status(500).json({
-        message:err.message ||'Server error!'
+        message:err.message || 'Server error!'
     })
 })
+const PORT = process.env.PORT || 5000;
 
-app.listen(process.env.PORT, ()=>{
-    console.log(`server running on port ${process.env.PORT}`)
+app.listen(PORT, ()=>{
+    console.log(`server running on port ${PORT}`)
 })
