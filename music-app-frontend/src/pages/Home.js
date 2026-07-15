@@ -21,7 +21,7 @@ export default function Home() {
         setError("Failed to load songs");
         setLoading(false);
       });
-  }, [API_KEY]);
+  }, []);
   useEffect(() => {
   fetch(
     `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UC8L6h-8x3pT5wd106u2QpWQ&type=video&order=date&maxResults=8&key=${API_KEY}`
@@ -31,7 +31,7 @@ export default function Home() {
       setTrending(data.items || []);
     })
     .catch((err) => console.log(err));
-}, []);
+}, [API_KEY]);
 
   const featured = trending.length ? trending : songs.slice(0, 8);
 
