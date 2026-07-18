@@ -73,9 +73,7 @@ export default function PlaylistPage() {
           <h2 className="logo">AminBeats</h2>
     
           <nav className="menu">
-            <Link to="/">Home</Link>
             <Link to="/favorites">Favorites</Link>
-            <Link to="/search">Search</Link>
           </nav>
         </aside>
     
