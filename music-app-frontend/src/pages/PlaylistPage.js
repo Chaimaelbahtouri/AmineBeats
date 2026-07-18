@@ -105,7 +105,8 @@ export default function PlaylistPage() {
                     src={
                       song.coverImage?.startsWith("http")
                         ? song.coverImage
-                        : `http://localhost:5000/images/${song.coverImage}`
+                        :`https://music-app-backend-self.vercel.app/images/${song.coverImage}`
+
                     }
                     alt={song.title}
                     className="song-img"
