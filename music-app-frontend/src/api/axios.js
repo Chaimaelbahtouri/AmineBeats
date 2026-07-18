@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const api = axios.create({
-    baseURL: "http://localhost:5000/api"
+    baseURL: "https://music-app-backend-self.vercel.app/api"
 })
 
 api.interceptors.request.use((config) => {
@@ -12,4 +12,4 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-export default api
+export default api;
