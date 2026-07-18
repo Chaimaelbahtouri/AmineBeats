@@ -8,7 +8,7 @@ export default function SongCard({ title, artist, youtubeUrl, spotifyUrl,coverIm
         src={
           coverImage?.startsWith("http")
             ? coverImage
-            : `http://localhost:5000/images/${coverImage}`
+            : `${import.meta.env.VITE_API_URL}/images/${coverImage}`
         }
         alt={title}
         className="cover"

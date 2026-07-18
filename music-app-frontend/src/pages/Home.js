@@ -1,16 +1,16 @@
-import SongCard from "../components/SongCard";
-import api from "../api/axios";
-import Hero from "./Hero";
-import SocialSection from "../components/SocialSection";
 import { useEffect, useState } from "react";
+import api from "../api/axios";
+import SocialSection from "../components/SocialSection";
+import SongCard from "../components/SongCard";
+import Hero from "./Hero";
 
 export default function Home() {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [trending, setTrending] = useState([]);
-  const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
-  console.log("API KEY:", API_KEY);
+  const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
+    console.log("API KEY:", API_KEY);
   useEffect(() => {
     api.get("/songs")
       .then((res) => {
