@@ -8,9 +8,6 @@ const authRoutes = require("../routes/auth");
 const songRoutes = require("../routes/Songs");
 
 dotenv.config();
-console.log("Mongo URI:", process.env.MONGO_URI ? "FOUND" : "MISSING");
-
-connectDB();
 
 const app = express();
 
@@ -22,8 +19,30 @@ app.use(
   express.static(path.join(__dirname, "../public/images"))
 );
 
+let isConnected = false;
+
+app.use(async (req, res, next) => {
+  try {
+    if (!isConnected) {
+      await connectDB();
+      isConnected = true;
+      console.log("MongoDB Connected!");
+    }
+    next();
+  } catch (error) {
+    console.log("MongoDB Error:", error.message);
+    res.status(500).json({
+      message: error.message
+    });
+  }
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/songs", songRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Backend is running!");
+});
 
 app.use((err, req, res, next) => {
   res.status(500).json({
