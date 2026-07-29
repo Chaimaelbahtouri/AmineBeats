@@ -18,6 +18,9 @@ const SongSchema = new mongoose.Schema ({
     coverImage : {
         type : String,
     },
+    musicUrl : {
+        type : String,
+    },
     views: {
     type: Number,
     default: 0

@@ -12,6 +12,7 @@ export default function Songs() {
     youtubeUrl: "",
     spotifyUrl: "",
     coverImage: "",
+    musicUrl: "",
   });
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function Songs() {
 
         // ارجع لوضعية Add
         setSelectedSong(null);
-        setInfo({ title: "", artist: "", youtubeUrl: "", spotifyUrl: "", coverImage: "" });
+        setInfo({ title: "", artist: "", youtubeUrl: "", spotifyUrl: "", coverImage: "" ,musicUrl: ""});
 
       } catch (err) {
         console.log("Error updating song:", err);
@@ -51,7 +52,7 @@ export default function Songs() {
         const res = await api.post("/songs", form);
         const newSong = res.data;
         setSongs((prev) => [...prev, newSong]);
-        setInfo({ title: "", artist: "", youtubeUrl: "", spotifyUrl: "", coverImage: "" });
+        setInfo({ title: "", artist: "", youtubeUrl: "", spotifyUrl: "", coverImage: ""  ,musicUrl: "",});
 
       } catch (err) {
         console.log("Error adding song:", err.response?.data);
@@ -78,9 +79,10 @@ export default function Songs() {
       youtubeUrl: song.youtubeUrl,
       spotifyUrl: song.spotifyUrl,
       coverImage: song.coverImage,
+      musicUrl: song.musicUrl,
     });
   };
-
+    
   return (
     <div className="songs-page">
 
@@ -100,6 +102,9 @@ export default function Songs() {
           value={form.spotifyUrl} onChange={(e) => setInfo({ ...form, spotifyUrl: e.target.value })} />
         <input className="songs-input" type="url" placeholder="Cover Image URL"
           value={form.coverImage} onChange={(e) => setInfo({ ...form, coverImage: e.target.value })} />
+        <input className="songs-input" type="url" placeholder="MusicURL"
+          value={form.musicUrl} onChange={(e) => setInfo({ ...form, musicUrl: e.target.value })} />
+
 
         <button className="songs-btn" type="submit">
           {selectedSong ? "Update Song" : "Add Song"}

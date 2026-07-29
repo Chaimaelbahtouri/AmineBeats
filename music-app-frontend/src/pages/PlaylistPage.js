@@ -1,7 +1,8 @@
-import { useEffect, useState, } from "react";
+import { useEffect, useState,useRef } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
+
 
 export default function PlaylistPage() {
   const [songs, setSongs] = useState([]);
@@ -10,6 +11,9 @@ export default function PlaylistPage() {
   const [activeSongId, setActiveSongId]= useState(null)
   const [isPlaying, setIsPlaying]= useState(false)
   const [favorites, setFavorites] = useState([]);
+  const audioRef = useRef(null);
+
+  const currentSong = songs.find(song => song._id === activeSongId);
   useEffect(()=> {
     const saved = JSON.parse(localStorage.getItem("favorites"))|| [];
     setFavorites(saved)
@@ -25,16 +29,29 @@ export default function PlaylistPage() {
     setFavorites(update);
     localStorage.setItem("favorites",JSON.stringify(update))
   }
-
+    useEffect(()=> {
+        if(audioRef.current && currentSong) {
+          audioRef.current.load();
+          audioRef.current.play();
+        }
+      },[activeSongId]);
   const handleClick = (songId)=> {
     if (activeSongId === songId ) {
+      if (isPlaying) {    
+        audioRef.current.pause()  
+      } else {
+      audioRef.current.play()      
+    }
       setIsPlaying(!isPlaying)
-    } else {
+   } else {
       setActiveSongId(songId)
       setIsPlaying(true)
-
+      } 
     }
-}
+  
+
+  
+    
 
   useEffect(() => {
     api.get("/songs")
@@ -47,7 +64,6 @@ export default function PlaylistPage() {
         setLoading(false);
       });
   }, []);
-
   if (loading) {
     return (
       <div className="playlist-loading">
@@ -64,7 +80,9 @@ export default function PlaylistPage() {
       </div>
     );
   }
-
+console.log(currentSong?.musicUrl);
+console.log(songs);
+console.log(JSON.stringify(songs[0], null, 2));
   return (
       <div id="music" className="music-app">
     
@@ -165,7 +183,14 @@ export default function PlaylistPage() {
         {/* FOOTER */}
         <footer className="player">
           <div className="player-info">Now Playing</div>
-    
+          <audio ref={audioRef}>
+            {currentSong && (
+              <source
+              src={currentSong.musicUrl}
+              type="audio/mpeg"
+            />
+      )}
+</audio>
           <div className="controls">
             <button>⏮</button>
             <button>▶</button>

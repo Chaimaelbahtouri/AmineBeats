@@ -26,7 +26,8 @@ router.get('/:id',async(req,res,next) => {
 })
 router.post('/',protect, isAdmin, async(req, res, next)=>{
     try {
-        const {title, artist,youtubeUrl,spotifyUrl,coverImage,createdAt} = req.body
+        console.log(req.body);
+        const {title, artist,youtubeUrl,spotifyUrl,coverImage,musicUrl,createdAt} = req.body
         if(! title ||! artist) {
             return res.status(400).json({error:"title and artist reequired"})
         }
@@ -36,6 +37,7 @@ router.post('/',protect, isAdmin, async(req, res, next)=>{
                 youtubeUrl,
                 spotifyUrl,
                 coverImage,
+                musicUrl,
                 createdAt
             })
         const saveSong = await Song.save()
