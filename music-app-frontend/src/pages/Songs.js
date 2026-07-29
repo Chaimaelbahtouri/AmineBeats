@@ -49,6 +49,8 @@ export default function Songs() {
     // إلا selectedSong = null → Add
     } else {
       try {
+            console.log(form);
+
         const res = await api.post("/songs", form);
         const newSong = res.data;
         setSongs((prev) => [...prev, newSong]);
