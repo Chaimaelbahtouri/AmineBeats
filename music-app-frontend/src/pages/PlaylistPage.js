@@ -29,12 +29,11 @@ export default function PlaylistPage() {
     setFavorites(update);
     localStorage.setItem("favorites",JSON.stringify(update))
   }
-    useEffect(()=> {
-        if(audioRef.current && currentSong) {
-          audioRef.current.load();
-          audioRef.current.play();
-        }
-      },[activeSongId]);
+    useEffect(() => {
+      if (audioRef.current && currentSong) {
+        audioRef.current.play().catch(err => console.log(err));
+      }
+    }, [currentSong]);
   const handleClick = (songId)=> {
     if (activeSongId === songId ) {
       if (isPlaying) {    
@@ -183,11 +182,11 @@ console.log(JSON.stringify(songs[0], null, 2));
         {/* FOOTER */}
         <footer className="player">
           <div className="player-info">Now Playing</div>
-          <audio ref={audioRef}>
-            {currentSong && (
+          <audio ref={audioRef} controls>
+              {currentSong && (
               <source
-              src={currentSong.musicUrl}
-              type="audio/mpeg"
+                src={currentSong.musicUrl}
+                type="audio/wav"
             />
       )}
 </audio>
