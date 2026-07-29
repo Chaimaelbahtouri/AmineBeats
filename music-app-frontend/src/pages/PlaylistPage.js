@@ -192,9 +192,7 @@ console.log(currentSong);
       )}
 </audio>
           <div className="controls">
-            <button>⏮</button>
-            <button>▶</button>
-            <button>⏭</button>
+      
           </div>
         </footer>
     
