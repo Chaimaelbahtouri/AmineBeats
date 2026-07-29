@@ -82,6 +82,7 @@ export default function PlaylistPage() {
 console.log(currentSong?.musicUrl);
 console.log(songs);
 console.log(JSON.stringify(songs[0], null, 2));
+console.log(currentSong);
   return (
       <div id="music" className="music-app">
     
