@@ -320,6 +320,7 @@ export default function PlaylistPage() {
       max="1"
       step="0.01"
       value={volume}
+        onInput={(e) => setVolume(Number(e.currentTarget.value))}
       onChange={(e) => setVolume(Number(e.target.value))}
       disabled={!currentSong}
       aria-label="Volume"
