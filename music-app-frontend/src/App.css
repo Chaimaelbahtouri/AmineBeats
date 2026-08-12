@@ -1114,135 +1114,575 @@ body {
   display: none;
 }
 
-
 /* =========================================================
-   FAVORITES
+   FAVORITES PAGE
 ========================================================= */
 
 .favorites {
   min-height: 100vh;
-
-  background: #121212;
-
-  color: white;
-
-  position: relative;
+  background: var(--bg);
+  color: var(--text);
 }
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .favorites-header {
-  padding: 80px 20px 20px;
+  position: relative;
 
-  background:
-    linear-gradient(
-      180deg,
-      #ff3b3b 0%,
-      #121212 100%
-    );
+  min-height: 260px;
 
-  color: white;
-}
-
-.favorites-header h1 {
-  font-size: 32px;
-
-  font-weight: 800;
+  padding: 80px 40px 40px;
 
   display: flex;
+  align-items: flex-end;
 
-  align-items: center;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255, 43, 43, 0.35),
+      transparent 65%
+    ),
+    linear-gradient(
+      180deg,
+      #5c0808 0%,
+      #190909 55%,
+      #0a0a0a 100%
+    );
 
-  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.favorites-header p {
-  color: #b3b3b3;
 
-  margin-top: 5px;
-}
+/* =========================================================
+   BACK BUTTON
+========================================================= */
 
 .back-btn {
   position: absolute;
 
-  top: 20px;
-  left: 20px;
+  top: 25px;
+  left: 25px;
 
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 50%;
 
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.back-btn:hover {
+  background: var(--red);
+  border-color: var(--red);
+
+  transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.favorites-title h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 0;
+
+  font-size: 42px;
+  font-weight: 800;
+}
+
+.heart-icon {
+  color: var(--red);
+  font-size: 36px;
+}
+
+.favorites-title p {
+  margin: 8px 0 0;
+
+  color: #aaa;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   FAVORITES LIST
+========================================================= */
+
+.favorites-list {
+  width: 100%;
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding: 25px 30px 100px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+
+/* =========================================================
+   FAVORITE ROW
+========================================================= */
+
+.favorite-row {
+  width: 100%;
+
+  min-height: 66px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 14px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  border: 1px solid transparent;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.favorite-row:hover {
+  background: rgba(255, 255, 255, 0.045);
+
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.favorite-row.active {
+  background: rgba(255, 43, 43, 0.12);
+
+  border-left: 3px solid var(--red);
+}
+
+
+/* =========================================================
+   LEFT
+========================================================= */
+
+.favorite-left {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+.favorite-index {
+  width: 25px;
+
+  flex-shrink: 0;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   COVER
+========================================================= */
+
+.favorite-cover {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  object-fit: cover;
+
+  background: #1b1b1b;
+}
+
+
+/* =========================================================
+   SONG INFO
+========================================================= */
+
+.favorite-info {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.favorite-info h3 {
+  margin: 0 0 3px;
 
   color: white;
 
-  display: flex;
+  font-size: 14px;
+  font-weight: 600;
 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.favorite-info p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.favorite-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-left: 15px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   PLAY BUTTON
+========================================================= */
+
+.favorite-play-btn {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
   align-items: center;
   justify-content: center;
 
   border: none;
+  border-radius: 50%;
+
+  background: var(--red);
+  color: white;
 
   cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
-.empty-state {
-  height: 60vh;
+.favorite-play-btn:hover {
+  background: var(--red-dark);
+
+  transform: scale(1.08);
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+========================================================= */
+
+.trash-btn {
+  width: 36px;
+  height: 36px;
 
   display: flex;
+  align-items: center;
+  justify-content: center;
 
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #777;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.trash-btn:hover {
+  background: rgba(255, 43, 43, 0.12);
+
+  color: var(--red);
+
+  transform: scale(1.08);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+  min-height: 100vh;
+
+  display: flex;
   flex-direction: column;
 
   align-items: center;
   justify-content: center;
 
+  padding: 30px;
+
   text-align: center;
-
-  gap: 10px;
-
-  color: #b3b3b3;
 }
 
-.empty-icon {
-  font-size: 60px;
+.empty-logo {
+  margin-bottom: 20px;
+}
 
-  color: var(--red);
+.empty-logo-img {
+  width: 85px;
+  height: 85px;
+
+  object-fit: contain;
+
+  border-radius: 18px;
+
+  filter:
+    drop-shadow(0 0 8px rgba(255, 43, 43, 0.35));
+
+  animation: favoriteLogoPulse 2.2s infinite ease-in-out;
+}
+
+@keyframes favoriteLogoPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .empty-state h2 {
+  margin: 0 0 8px;
+
   color: white;
 
   font-size: 24px;
 }
 
 .empty-state p {
+  margin: 0;
+
   color: #888;
+
+  font-size: 14px;
 }
 
+
+/* =========================================================
+   DISCOVER BUTTON
+========================================================= */
+
 .discover-btn {
-  margin-top: 10px;
+  margin-top: 20px;
 
-  padding: 10px 16px;
-
-  border-radius: 12px;
+  padding: 11px 18px;
 
   border: none;
+  border-radius: 12px;
+
+  background: var(--red);
+  color: white;
+
+  font-size: 13px;
+  font-weight: bold;
 
   cursor: pointer;
 
-  background: var(--red);
-
-  color: white;
-
-  font-weight: bold;
+  transition: 0.2s ease;
 }
 
 .discover-btn:hover {
   background: var(--red-dark);
 
-  transform: scale(1.05);
+  transform: translateY(-2px);
 }
 
 
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .favorites-header {
+    min-height: 220px;
+
+    padding: 70px 25px 30px;
+  }
+
+  .favorites-title h1 {
+    font-size: 34px;
+  }
+
+  .heart-icon {
+    font-size: 30px;
+  }
+
+  .favorites-list {
+    padding: 20px 15px 100px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .favorites-header {
+    min-height: 200px;
+
+    padding:
+      70px
+      18px
+      25px;
+  }
+
+  .back-btn {
+    top: 18px;
+    left: 18px;
+
+    width: 38px;
+    height: 38px;
+  }
+
+  .favorites-title h1 {
+    font-size: 29px;
+
+    gap: 9px;
+  }
+
+  .heart-icon {
+    font-size: 25px;
+  }
+
+  .favorites-title p {
+    font-size: 12px;
+  }
+
+  .favorites-list {
+    padding: 15px 10px 110px;
+
+    gap: 4px;
+  }
+
+  .favorite-row {
+    min-height: 62px;
+
+    padding: 8px 9px;
+  }
+
+  .favorite-left {
+    gap: 9px;
+  }
+
+  .favorite-index {
+    width: 18px;
+
+    font-size: 11px;
+  }
+
+  .favorite-cover {
+    width: 43px;
+    height: 43px;
+  }
+
+  .favorite-info h3 {
+    font-size: 13px;
+  }
+
+  .favorite-info p {
+    font-size: 11px;
+  }
+
+  .favorite-actions {
+    gap: 4px;
+
+    margin-left: 8px;
+  }
+
+  .favorite-play-btn {
+    width: 34px;
+    height: 34px;
+
+    font-size: 12px;
+  }
+
+  .trash-btn {
+    width: 32px;
+    height: 32px;
+
+    font-size: 13px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .favorite-index {
+    display: none;
+  }
+
+  .favorite-cover {
+    width: 40px;
+    height: 40px;
+  }
+
+  .favorite-info h3 {
+    max-width: 130px;
+  }
+
+  .favorite-actions {
+    margin-left: 5px;
+  }
+
+}
 /* =========================================================
    SEARCH
 ========================================================= */

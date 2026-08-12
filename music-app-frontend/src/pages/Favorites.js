@@ -6,42 +6,35 @@ import {
   FaPause,
   FaPlay,
   FaRegTrashAlt,
-  FaArrowLeft
+  FaArrowLeft,
 } from "react-icons/fa";
 
 export default function FavoritesPage() {
-
   const nav = useNavigate();
-
-  const backClick = () => {
-    nav("/PlaylistPage");
-  };
 
   const [favorites, setFavorites] = useState([]);
   const [activeSongId, setActiveSongId] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(saved);
   }, []);
 
+  const backClick = () => {
+    nav("/PlaylistPage");
+  };
 
   const handleClick = (songId) => {
-
     if (activeSongId === songId) {
-      setIsPlaying(!isPlaying);
+      setIsPlaying((prev) => !prev);
     } else {
       setActiveSongId(songId);
       setIsPlaying(true);
     }
-
   };
 
-
   const removedClick = (song) => {
-
     const updated = favorites.filter(
       (s) => s._id !== song._id
     );
@@ -53,11 +46,13 @@ export default function FavoritesPage() {
       JSON.stringify(updated)
     );
 
+    if (activeSongId === song._id) {
+      setActiveSongId(null);
+      setIsPlaying(false);
+    }
   };
 
-
   const getImage = (coverImage) => {
-
     if (!coverImage) {
       return logo;
     }
@@ -65,36 +60,31 @@ export default function FavoritesPage() {
     return coverImage.startsWith("http")
       ? coverImage
       : `http://localhost:5000/images/${coverImage}`;
-
   };
 
-
   return (
-
     <div className="favorites">
 
+      {/* =========================
+          EMPTY FAVORITES
+      ========================= */}
 
       {favorites.length === 0 ? (
-
         <div className="empty-state">
 
           <div className="empty-logo">
-
             <img
               src={logo}
-              className="row-cover"
-              alt="logo"
+              className="empty-logo-img"
+              alt="AminBeats"
             />
-
           </div>
-
 
           <h2>No favorites yet</h2>
 
           <p>
             Start adding songs you love
           </p>
-
 
           <button
             className="discover-btn"
@@ -103,185 +93,126 @@ export default function FavoritesPage() {
             Discover music
           </button>
 
-
         </div>
-
-
       ) : (
 
+        /* =========================
+           FAVORITES PAGE
+        ========================= */
+
         <>
-
-
           <header className="favorites-header">
-
 
             <button
               className="back-btn"
               onClick={backClick}
+              aria-label="Go back"
             >
-
               <FaArrowLeft />
-
             </button>
 
-
-
-            <div>
+            <div className="favorites-title">
 
               <h1>
-
                 <FaHeart className="heart-icon" />
-
                 Favorites
-
               </h1>
-
 
               <p>
                 Your personal music collection
               </p>
 
-
             </div>
-
 
           </header>
 
-
-
-          <section className="playlist-list">
-
+          <section className="favorites-list">
 
             {favorites.map((song, index) => (
 
               <div
-
                 key={song._id}
-
-                className={
-                  `playlist-row ${
-                    activeSongId === song._id
-                      ? "active"
-                      : ""
-                  }`
-                }
-
+                className={`favorite-row ${
+                  activeSongId === song._id
+                    ? "active"
+                    : ""
+                }`}
                 onClick={() => handleClick(song._id)}
-
               >
 
+                {/* LEFT */}
 
-                <div className="row-left">
+                <div className="favorite-left">
 
-
-                  <span className="index">
-
+                  <span className="favorite-index">
                     {index + 1}
-
                   </span>
 
-
-
                   <img
-
                     src={getImage(song.coverImage)}
-
-                    className="row-cover"
-
+                    className="favorite-cover"
                     alt={song.title}
-
                   />
 
-
-
-                  <div className="row-info">
-
+                  <div className="favorite-info">
 
                     <h3>
                       {song.title}
                     </h3>
 
-
                     <p>
                       {song.artist}
                     </p>
 
-
                   </div>
 
-
                 </div>
 
+                {/* RIGHT */}
 
-
-                <div className="row-right">
-
+                <div className="favorite-actions">
 
                   <button
-
-                    className="play-btn"
-
+                    className="favorite-play-btn"
                     onClick={(e) => {
-
                       e.stopPropagation();
-
                       handleClick(song._id);
-
                     }}
-
-                  >
-
-                    {
-                      activeSongId === song._id && isPlaying
-                        ? <FaPause />
-                        : <FaPlay />
+                    aria-label={
+                      activeSongId === song._id &&
+                      isPlaying
+                        ? "Pause"
+                        : "Play"
                     }
-
-
+                  >
+                    {activeSongId === song._id &&
+                    isPlaying ? (
+                      <FaPause />
+                    ) : (
+                      <FaPlay />
+                    )}
                   </button>
-
-
-
 
                   <button
-
                     className="trash-btn"
-
                     onClick={(e) => {
-
                       e.stopPropagation();
-
                       removedClick(song);
-
                     }}
-
+                    aria-label="Remove from favorites"
                   >
-
                     <FaRegTrashAlt />
-
                   </button>
 
-
-
                 </div>
-
 
               </div>
 
-
             ))}
 
-
           </section>
-
-
         </>
-
       )}
-
-
     </div>
-
   );
-
 }
