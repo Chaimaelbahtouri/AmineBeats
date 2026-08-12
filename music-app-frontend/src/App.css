@@ -3478,3 +3478,834 @@ body {
     margin: 0 6px;
   }
 }
+
+/* =========================================================
+   CUSTOM AUDIO PLAYER CONTROLS
+   ========================================================= */
+
+.custom-player-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+/* Player control buttons */
+.custom-player-controls button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 38px;
+  height: 38px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #222;
+  color: #fff;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.custom-player-controls button:hover {
+  background: var(--red);
+}
+
+/* Main play / pause */
+.custom-player-controls .main-play-btn {
+  width: 42px;
+  height: 42px;
+  background: var(--red);
+}
+
+.custom-player-controls .main-play-btn:hover {
+  background: var(--red-dark);
+}
+
+/* 10 seconds label */
+.custom-player-controls button span {
+  position: absolute;
+
+  font-size: 8px;
+  font-weight: bold;
+
+  pointer-events: none;
+}
+
+/* Time */
+.player-time {
+  flex-shrink: 0;
+
+  color: var(--muted);
+  font-size: 12px;
+
+  min-width: 32px;
+  text-align: center;
+}
+
+/* Progress */
+.player-progress {
+  flex: 1 1 auto;
+  min-width: 60px;
+
+  cursor: pointer;
+}
+
+/* Volume */
+.player-volume {
+  width: 80px;
+  flex-shrink: 1;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 769px) {
+
+  .music-app > .player {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .music-app > .player .player-info {
+    flex: 0 1 260px;
+    min-width: 0;
+  }
+
+  .music-app > .player .custom-player-controls {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+/* =========================================================
+   TABLET / MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .music-app > .player {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 8px 10px;
+  }
+
+  .music-app > .player .player-info {
+    flex: 0 1 180px;
+    min-width: 0;
+  }
+
+  .music-app > .player .custom-player-controls {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .custom-player-controls .player-volume {
+    display: none;
+  }
+
+  .custom-player-controls button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .custom-player-controls .main-play-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .player-progress {
+    min-width: 50px;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 425px) {
+
+  .music-app > .player {
+    gap: 6px;
+    padding: 7px;
+  }
+
+  .music-app > .player .player-info {
+    flex: 0 1 125px;
+    gap: 7px;
+  }
+
+  .music-app > .player .player-cover {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+  }
+
+  .custom-player-controls {
+    gap: 4px;
+  }
+
+  .custom-player-controls button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .custom-player-controls .main-play-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .custom-player-controls button span {
+    font-size: 7px;
+  }
+
+  .player-time {
+    display: none;
+  }
+
+  .player-progress {
+    min-width: 35px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 350px) {
+
+  .music-app > .player .player-info {
+    flex: 0 1 100px;
+  }
+
+  .music-app > .player .player-text p {
+    display: none;
+  }
+
+  .music-app > .player .player-cover {
+    width: 38px;
+    height: 38px;
+  }
+
+  .custom-player-controls button {
+    width: 28px;
+    height: 28px;
+  }
+
+  .custom-player-controls .main-play-btn {
+    width: 32px;
+    height: 32px;
+  }
+}
+/* =========================================================
+   hna mochkil lkher 
+   ========================================================= */
+/* =========================================================
+   PLAYLIST + AUDIO PLAYER FINAL LAYOUT FIX
+   Keeps the existing design.
+   Fixes:
+   - player moving while scrolling
+   - player disappearing at page edges
+   - footer/player collision
+   - horizontal overflow
+   - long song titles
+   - responsive layout
+   ========================================================= */
+
+/* =========================
+   PLAYLIST APP
+========================= */
+
+.music-app {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) 75px;
+
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+
+  background: var(--bg);
+
+  overflow: hidden;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.music-app > .sidebar {
+  grid-column: 1;
+  grid-row: 1 / 3;
+
+  min-width: 0;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.music-app > .main {
+  grid-column: 2;
+  grid-row: 1;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 25px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+/* Prevent flex/grid children from forcing
+   the page wider than the viewport */
+
+.music-app .playlist-list,
+.music-app .playlist-row,
+.music-app .row-left,
+.music-app .row-info {
+  min-width: 0;
+}
+
+
+/* =========================
+   PLAYLIST ROW
+========================= */
+
+.music-app .playlist-row {
+  width: 100%;
+  max-width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  overflow: hidden;
+}
+
+
+/* Left side */
+
+.music-app .row-left {
+  flex: 1 1 auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+  overflow: hidden;
+}
+
+
+/* Song information */
+
+.music-app .row-info {
+  flex: 1 1 auto;
+
+  min-width: 0;
+  overflow: hidden;
+}
+
+.music-app .row-info h3 {
+  min-width: 0;
+  max-width: 100%;
+
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.music-app .row-info p {
+  min-width: 0;
+
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* Right buttons */
+
+.music-app .row-right {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  min-width: max-content;
+}
+
+
+/* =========================
+   AUDIO PLAYER
+========================= */
+
+/*
+   IMPORTANT:
+   Do NOT use fixed or sticky here.
+
+   The player belongs to the grid footer row,
+   so it stays in its correct place while
+   .main is the only scrolling area.
+*/
+
+.music-app > .player {
+  grid-column: 2;
+  grid-row: 2;
+
+  position: static;
+
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+
+  height: 75px;
+  min-height: 75px;
+
+  margin: 0;
+
+  transform: none;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 0 20px;
+
+  z-index: 10;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================
+   PLAYER INFO
+========================= */
+
+.music-app > .player .player-info {
+  flex: 0 1 260px;
+
+  width: 260px;
+  min-width: 0;
+  max-width: 260px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 15px;
+
+  overflow: hidden;
+}
+
+.music-app > .player .player-cover {
+  width: 56px;
+  height: 56px;
+
+  flex: 0 0 56px;
+
+  object-fit: cover;
+
+  border-radius: 10px;
+}
+
+.music-app > .player .player-text {
+  flex: 1 1 auto;
+
+  min-width: 0;
+  max-width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+.music-app > .player .player-text h4 {
+  min-width: 0;
+  max-width: 100%;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.music-app > .player .player-text p {
+  min-width: 0;
+  max-width: 100%;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================
+   NATIVE AUDIO
+========================= */
+
+.music-app > .player audio {
+  flex: 1 1 auto;
+
+  width: 100%;
+  min-width: 0;
+  max-width: 500px;
+
+  height: 40px;
+
+  margin: 0 auto;
+}
+
+
+/* =========================
+   CONTROLS
+========================= */
+
+.music-app > .player .controls {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: max-content;
+}
+
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width: 1200px) {
+
+  .music-app > .player {
+    gap: 25px;
+  }
+
+  .music-app > .player audio {
+    max-width: 550px;
+  }
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1024px) {
+
+  .music-app {
+    grid-template-columns: 190px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) 75px;
+  }
+
+  .music-app > .player {
+    gap: 12px;
+    padding: 0 12px;
+  }
+
+  .music-app > .player .player-info {
+    flex: 0 1 210px;
+
+    width: 210px;
+    max-width: 210px;
+  }
+
+  .music-app > .player audio {
+    max-width: none;
+    margin: 0;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .music-app {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+
+    overflow: visible;
+  }
+
+
+  /* Sidebar */
+
+  .music-app > .sidebar {
+    width: 100%;
+    min-height: auto;
+
+    flex: 0 0 auto;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+
+  /* Main */
+
+  .music-app > .main {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    flex: 1 1 auto;
+
+    padding: 15px;
+
+    overflow-x: hidden;
+    overflow-y: visible;
+
+    padding-bottom: 20px;
+  }
+
+
+  /* Player */
+
+  .music-app > .player {
+    position: sticky;
+
+    bottom: 0;
+
+    width: 100%;
+    max-width: none;
+
+    height: auto;
+    min-height: 70px;
+
+    flex: 0 0 auto;
+
+    padding: 8px 10px;
+
+    gap: 8px;
+
+    z-index: 999;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+  }
+
+
+  /* Player info */
+
+  .music-app > .player .player-info {
+    flex: 0 1 150px;
+
+    width: 150px;
+    max-width: 150px;
+
+    gap: 8px;
+  }
+
+
+  .music-app > .player .player-cover {
+    width: 48px;
+    height: 48px;
+
+    flex-basis: 48px;
+  }
+
+
+  /* Audio */
+
+  .music-app > .player audio {
+    flex: 1 1 auto;
+
+    width: 100%;
+    min-width: 0;
+
+    max-width: none;
+
+    margin: 0;
+  }
+
+}
+
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media (max-width: 425px) {
+
+  .music-app > .main {
+    padding: 12px;
+  }
+
+
+  .music-app > .player {
+    min-height: 64px;
+
+    padding: 7px 8px;
+
+    gap: 6px;
+  }
+
+
+  .music-app > .player .player-info {
+    flex: 0 1 115px;
+
+    width: 115px;
+    max-width: 115px;
+
+    gap: 7px;
+  }
+
+
+  .music-app > .player .player-cover {
+    width: 42px;
+    height: 42px;
+
+    flex-basis: 42px;
+  }
+
+
+  .music-app > .player .player-text h4 {
+    font-size: 13px;
+  }
+
+
+  .music-app > .player .player-text p {
+    font-size: 11px;
+  }
+
+
+  .music-app > .player audio {
+    min-width: 0;
+
+    height: 36px;
+  }
+
+
+  .music-app .playlist-row {
+    gap: 8px;
+    padding: 10px;
+  }
+
+
+  .music-app .row-left {
+    gap: 8px;
+  }
+
+
+  .music-app .row-info h3 {
+    font-size: 14px;
+  }
+
+}
+
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media (max-width: 350px) {
+
+  .music-app > .player {
+    padding: 6px;
+    gap: 5px;
+  }
+
+
+  .music-app > .player .player-info {
+    flex: 0 1 95px;
+
+    width: 95px;
+    max-width: 95px;
+  }
+
+
+  .music-app > .player .player-cover {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+  }
+
+
+  .music-app > .player .player-text p {
+    display: none;
+  }
+
+
+  .music-app > .player .player-text h4 {
+    font-size: 12px;
+  }
+
+
+  .music-app > .player audio {
+    height: 34px;
+  }
+
+
+  .music-app .row-info h3 {
+    max-width: 120px;
+  }
+
+}
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+.music-app > .main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.music-app > .main::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 10px;
+}
+
+.music-app > .main::-webkit-scrollbar-thumb:hover {
+  background: #ff2b2b;
+}
