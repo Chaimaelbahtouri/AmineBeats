@@ -182,15 +182,38 @@ console.log(currentSong);
     
         {/* FOOTER */}
         <footer className="player">
-          <div className="player-info">Now Playing</div>
-          <audio ref={audioRef} controls>
-              {currentSong && (
-              <source
-                src={currentSong.musicUrl}
-                type="audio/wav"
-            />
-      )}
-</audio>
+        <div className="player-info">
+            {currentSong ? (
+              <>
+                <img
+                  src={currentSong.coverImage}
+                  alt={currentSong.title}
+                  className="player-cover"
+                />
+
+                <div className="player-text">
+                  <h4>{currentSong.title}</h4>
+                  <p>{currentSong.artist}</p>
+                </div>
+              </>
+            ) : (
+                <p>No song selected</p>
+          )}
+        </div>
+       
+        <audio
+              key={currentSong?._id}
+              ref={audioRef}
+              controls
+              onEnded={() => setIsPlaying(false)}
+        > 
+            {currentSong && (
+            <source
+            src={currentSong.musicUrl}
+            type="audio/mpeg"
+          />
+          )}
+          </audio>
           <div className="controls">
       
           </div>
