@@ -2356,10 +2356,166 @@
     white-space: nowrap;
   }
 }
+
+
+
 /* =========================================================
-   AUDIO PLAYER - FINAL RED THEME
+   TABLET
    ========================================================= */
 
+@media (max-width: 900px) {
+
+  .music-app > .player {
+    gap: 12px;
+    padding: 8px 12px;
+  }
+
+  .music-app > .player .player-info {
+    width: 190px;
+    flex-basis: 190px;
+  }
+
+  .music-app > .player audio {
+    height: 40px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .music-app > .main {
+    min-width: 0;
+    overflow-x: hidden;
+    padding-bottom: 90px;
+  }
+
+  .music-app > .player {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 68px;
+
+    grid-column: auto;
+    grid-row: auto;
+
+    z-index: 9999;
+
+    gap: 8px;
+    padding: 7px 10px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0;
+
+    box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.35);
+  }
+
+  .music-app > .player .player-info {
+    width: 150px;
+    min-width: 0;
+    flex: 0 1 150px;
+
+    gap: 8px;
+  }
+
+  .music-app > .player .player-cover {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+
+    border-radius: 8px;
+  }
+
+  .music-app > .player .player-text h4 {
+    font-size: 13px;
+  }
+
+  .music-app > .player .player-text p {
+    font-size: 11px;
+  }
+
+  .music-app > .player audio {
+    min-width: 0;
+    width: auto;
+    height: 40px;
+
+    flex: 1 1 auto;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 425px) {
+
+  .music-app > .player {
+    height: 64px;
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .music-app > .player .player-info {
+    width: 125px;
+    flex-basis: 125px;
+    gap: 7px;
+  }
+
+  .music-app > .player .player-cover {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  .music-app > .player .player-text h4 {
+    font-size: 12px;
+  }
+
+  .music-app > .player .player-text p {
+    font-size: 10px;
+  }
+
+  .music-app > .player audio {
+    height: 38px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 350px) {
+
+  .music-app > .player {
+    gap: 5px;
+    padding: 5px 6px;
+  }
+
+  .music-app > .player .player-info {
+    width: 100px;
+    flex-basis: 100px;
+  }
+
+  .music-app > .player .player-cover {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .music-app > .player .player-text p {
+    display: none;
+  }
+
+  .music-app > .player audio {
+    height: 36px;
+  }
+}
 .custom-player-controls {
   display: flex;
   align-items: center;
@@ -2368,89 +2524,34 @@
   min-width: 0;
 }
 
-/* ---------- ALL PLAYER BUTTONS ---------- */
-
-.custom-player-controls button {
-  position: relative;
-
-  width: 38px;
-  height: 38px;
-
-  flex-shrink: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid rgba(255, 43, 43, 0.25);
-  border-radius: 50%;
-
-  background: #151515;
-  color: #fff;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.custom-player-controls button:hover {
-  background: rgba(255, 43, 43, 0.15);
-  border-color: var(--red);
-  color: var(--red);
-
-  transform: scale(1.06);
-
-  box-shadow: 0 0 12px rgba(255, 43, 43, 0.2);
-}
-
-/* ---------- MAIN PLAY BUTTON ---------- */
-
-.custom-player-controls .main-play-btn {
-  width: 44px;
-  height: 44px;
-
-  background: var(--red);
-  border-color: var(--red);
-
-  color: white;
-
-  box-shadow: 0 0 15px rgba(255, 43, 43, 0.2);
-}
-
-.custom-player-controls .main-play-btn:hover {
-  background: var(--red-dark);
-  border-color: var(--red-dark);
-
-  color: white;
-
-  transform: scale(1.08);
-}
-
-/* ---------- SKIP BUTTONS ---------- */
-
+/* 10 seconds buttons */
 .skip-btn {
-  width: 42px !important;
+  width: 48px !important;
   height: 38px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 4px;
+
+  padding: 0 !important;
 
   border-radius: 10px !important;
 
-  font-size: 11px;
-  font-weight: 700;
+  background: #151515 !important;
+  border: 1px solid rgba(255, 43, 43, 0.3) !important;
 
-  letter-spacing: -0.2px;
-
-  padding: 0 !important;
+  color: white !important;
 }
 
-/* 10s text stays centered */
+.skip-btn svg {
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
 .skip-btn span {
   position: static !important;
-
-  display: block;
 
   font-size: 10px !important;
   font-weight: 700;
@@ -2460,80 +2561,61 @@
   pointer-events: none;
 }
 
-/* ---------- PROGRESS ---------- */
+.skip-btn:hover {
+  background: rgba(255, 43, 43, 0.15) !important;
+  border-color: #ff2b2b !important;
+  color: #ff2b2b !important;
+}
 
+/* Main play */
+.main-play-btn {
+  width: 44px !important;
+  height: 44px !important;
+
+  flex-shrink: 0;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50% !important;
+
+  background: #ff2b2b !important;
+  border: none !important;
+
+  color: white !important;
+}
+
+.main-play-btn:hover {
+  background: #b30000 !important;
+}
+
+/* Progress */
 .player-progress {
-  flex: 1 1 auto;
-
+  flex: 1;
   min-width: 70px;
 
   height: 4px;
 
-  appearance: none;
-  -webkit-appearance: none;
-
-  background: #292929;
-
-  border-radius: 10px;
+  accent-color: #ff2b2b;
 
   cursor: pointer;
 }
 
-/* Chrome / Safari */
+/* Time */
+.player-time {
+  min-width: 35px;
 
-.player-progress::-webkit-slider-runnable-track {
-  height: 4px;
-  background: #292929;
-  border-radius: 10px;
+  color: #999;
+
+  font-size: 11px;
+
+  text-align: center;
+
+  flex-shrink: 0;
 }
 
-.player-progress::-webkit-slider-thumb {
-  appearance: none;
-  -webkit-appearance: none;
-
-  width: 12px;
-  height: 12px;
-
-  margin-top: -4px;
-
-  border-radius: 50%;
-
-  background: var(--red);
-
-  border: 2px solid #111;
-
-  cursor: pointer;
-}
-
-/* Firefox */
-
-.player-progress::-moz-range-track {
-  height: 4px;
-  background: #292929;
-  border-radius: 10px;
-}
-
-.player-progress::-moz-range-progress {
-  height: 4px;
-  background: var(--red);
-  border-radius: 10px;
-}
-
-.player-progress::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-
-  border-radius: 50%;
-
-  background: var(--red);
-
-  border: 2px solid #111;
-
-  cursor: pointer;
-}
-
-/* ---------- VOLUME ---------- */
-
+/* Volume */
 .volume-control {
   display: flex;
   align-items: center;
@@ -2543,170 +2625,14 @@
 }
 
 .volume-control svg {
-  color: var(--red);
-
+  color: #ff2b2b;
   font-size: 15px;
-
-  flex-shrink: 0;
 }
-
-/* volume slider */
 
 .player-volume {
   width: 75px;
-  height: 4px;
 
-  appearance: none;
-  -webkit-appearance: none;
-
-  background: #292929;
-
-  border-radius: 10px;
+  accent-color: #ff2b2b;
 
   cursor: pointer;
-}
-
-/* Chrome / Safari */
-
-.player-volume::-webkit-slider-runnable-track {
-  height: 4px;
-  background: #292929;
-  border-radius: 10px;
-}
-
-.player-volume::-webkit-slider-thumb {
-  appearance: none;
-  -webkit-appearance: none;
-
-  width: 11px;
-  height: 11px;
-
-  margin-top: -3.5px;
-
-  border-radius: 50%;
-
-  background: var(--red);
-
-  border: 2px solid #111;
-
-  cursor: pointer;
-}
-
-/* Firefox */
-
-.player-volume::-moz-range-track {
-  height: 4px;
-  background: #292929;
-  border-radius: 10px;
-}
-
-.player-volume::-moz-range-progress {
-  height: 4px;
-  background: var(--red);
-  border-radius: 10px;
-}
-
-.player-volume::-moz-range-thumb {
-  width: 11px;
-  height: 11px;
-
-  border-radius: 50%;
-
-  background: var(--red);
-
-  border: 2px solid #111;
-
-  cursor: pointer;
-}
-
-/* ---------- TIME ---------- */
-
-.player-time {
-  flex-shrink: 0;
-
-  min-width: 38px;
-
-  color: #999;
-
-  font-size: 11px;
-
-  text-align: center;
-}
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 768px) {
-
-  .custom-player-controls {
-    gap: 6px;
-  }
-
-  .custom-player-controls button {
-    width: 34px;
-    height: 34px;
-  }
-
-  .custom-player-controls .main-play-btn {
-    width: 38px;
-    height: 38px;
-  }
-
-  .skip-btn {
-    width: 40px !important;
-    height: 34px !important;
-  }
-
-  .player-volume {
-    display: none;
-  }
-
-  .volume-control svg {
-    display: none;
-  }
-
-  .player-progress {
-    min-width: 45px;
-  }
-}
-
-/* =========================================================
-   SMALL PHONE
-   ========================================================= */
-
-@media (max-width: 425px) {
-
-  .custom-player-controls {
-    gap: 4px;
-  }
-
-  .custom-player-controls button {
-    width: 30px;
-    height: 30px;
-  }
-
-  .custom-player-controls .main-play-btn {
-    width: 34px;
-    height: 34px;
-  }
-
-  .skip-btn {
-    width: 36px !important;
-    height: 30px !important;
-
-    border-radius: 8px !important;
-  }
-
-  .skip-btn span {
-    font-size: 9px !important;
-  }
-
-  .player-progress {
-    min-width: 35px;
-  }
-
-  .player-time {
-    display: none;
-  }
 }

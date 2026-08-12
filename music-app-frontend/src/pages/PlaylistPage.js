@@ -258,69 +258,75 @@ export default function PlaylistPage() {
             <p>No song selected</p>
           )}
         </div>
+          
+          <div className="custom-player-controls">
 
-        <div className="custom-player-controls">
-          <button
-            className="skip-btn"
-            onClick={() => skip(-10)}
-            disabled={!currentSong}
-            aria-label="Back 10 seconds"
-          >
-            <FaBackward />
-            <span>10</span>
-          </button>
+  <button
+    className="skip-btn"
+    onClick={() => skip(-10)}
+    disabled={!currentSong}
+    aria-label="Back 10 seconds"
+  >
+    <FaBackward />
+    <span>10s</span>
+  </button>
 
-          <button
-            className="main-play-btn"
-            onClick={togglePlay}
-            disabled={!currentSong}
-            aria-label={isPlaying ? "Pause" : "Play"}
-          >
-            {isPlaying ? <FaPause /> : <FaPlay />}
-          </button>
+  <button
+    className="main-play-btn"
+    onClick={togglePlay}
+    disabled={!currentSong}
+    aria-label={isPlaying ? "Pause" : "Play"}
+  >
+    {isPlaying ? <FaPause /> : <FaPlay />}
+  </button>
 
-          <button
-            className="skip-btn"
-            onClick={() => skip(10)}
-            disabled={!currentSong}
-            aria-label="Forward 10 seconds"
-          >
-            <FaForward />
-            <span>10</span>
-          </button>
+  <button
+    className="skip-btn"
+    onClick={() => skip(10)}
+    disabled={!currentSong}
+    aria-label="Forward 10 seconds"
+  >
+    <FaForward />
+    <span>10s</span>
+  </button>
 
-          <span className="player-time">{formatTime(currentTime)}</span>
+  <span className="player-time">
+    {formatTime(currentTime)}
+  </span>
 
-          <input
-            className="player-progress"
-            type="range"
-            min="0"
-            max={duration || 0}
-            step="0.1"
-            value={Math.min(currentTime, duration || 0)}
-            onChange={handleProgressChange}
-            disabled={!currentSong || !duration}
-            aria-label="Song progress"
-          />
+  <input
+    className="player-progress"
+    type="range"
+    min="0"
+    max={duration || 0}
+    step="0.1"
+    value={Math.min(currentTime, duration || 0)}
+    onChange={handleProgressChange}
+    disabled={!currentSong || !duration}
+    aria-label="Song progress"
+  />
 
-          <span className="player-time">{formatTime(duration)}</span>
+  <span className="player-time">
+    {formatTime(duration)}
+  </span>
 
-          <div className="volume-control">
-            <FaVolumeUp />
-            <input
-              className="player-volume"
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={(e) => setVolume(Number(e.target.value))}
-              disabled={!currentSong}
-              aria-label="Volume"
-            />
-          </div>
-        </div>
+  <div className="volume-control">
+    <FaVolumeUp />
 
+    <input
+      className="player-volume"
+      type="range"
+      min="0"
+      max="1"
+      step="0.01"
+      value={volume}
+      onChange={(e) => setVolume(Number(e.target.value))}
+      disabled={!currentSong}
+      aria-label="Volume"
+    />
+  </div>
+
+</div>
         <audio
           ref={audioRef}
           onTimeUpdate={handleTimeUpdate}
