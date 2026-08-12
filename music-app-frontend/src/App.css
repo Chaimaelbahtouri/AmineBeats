@@ -543,69 +543,91 @@ input {
 }
 
 /* =========================================================
-   AUDIO PLAYER
-   ========================================================= */
+   AUDIO PLAYER - DESKTOP
+========================================================= */
 
 .player {
   grid-column: 2;
   grid-row: 2;
+
   width: 100%;
   min-width: 0;
-  height: 86px;
-  padding: 10px 18px;
+  height: 82px;
+
+  padding: 10px 20px;
+
   background: linear-gradient(
     180deg,
     rgba(25, 25, 25, 0.98),
-    rgba(12, 12, 12, 0.99)
+    rgba(10, 10, 10, 0.99)
   );
+
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25);
+
+  box-shadow:
+    0 -10px 30px rgba(0, 0, 0, 0.3);
+
   display: flex;
   align-items: center;
-  gap: 16px;
-  z-index: 1000;
+  gap: 20px;
+
+  z-index: 9999;
 }
 
 /* =========================================================
    PLAYER INFO
-   ========================================================= */
+========================================================= */
 
 .player-info {
-  width: 240px;
+  width: 250px;
   min-width: 0;
-  flex: 0 1 240px;
+  flex: 0 1 250px;
+
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .player-cover {
   width: 55px;
   height: 55px;
+
   border-radius: 10px;
+
   object-fit: cover;
+
   flex-shrink: 0;
 }
 
 .player-text {
   min-width: 0;
+
   display: flex;
   flex-direction: column;
+
   gap: 4px;
 }
 
 .player-text h4 {
+  margin: 0;
+
   color: white;
+
   font-size: 14px;
   font-weight: 600;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .player-text p {
+  margin: 0;
+
   color: var(--muted);
+
   font-size: 12px;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -613,44 +635,66 @@ input {
 
 /* =========================================================
    CONTROLS
-   ========================================================= */
+========================================================= */
 
 .custom-player-controls {
   flex: 1;
   min-width: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+
+  gap: 10px;
 }
 
+/* =========================================================
+   ALL PLAYER BUTTONS
+========================================================= */
+
 .custom-player-controls button {
-  position: relative;
   width: 38px;
   height: 38px;
+
   flex-shrink: 0;
+
   border: none;
   border-radius: 50%;
+
   background: #202020;
+
   color: white;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .custom-player-controls button:hover:not(:disabled) {
   background: var(--red);
-  transform: translateY(-1px);
+
+  transform: scale(1.06);
 }
 
 .custom-player-controls button:disabled {
   opacity: 0.35;
+
   cursor: not-allowed;
 }
 
+/* =========================================================
+   SKIP BUTTONS
+========================================================= */
+
 .skip-btn {
+  position: relative;
+
   gap: 2px;
 }
 
@@ -660,22 +704,33 @@ input {
 
 .skip-btn span {
   position: absolute;
+
   font-size: 8px;
   font-weight: bold;
+
   line-height: 1;
+
   pointer-events: none;
 }
+
+/* =========================================================
+   MAIN PLAY BUTTON
+========================================================= */
 
 .main-play-btn {
   width: 44px !important;
   height: 44px !important;
+
   background: var(--red) !important;
-  box-shadow: 0 0 15px rgba(255, 43, 43, 0.25);
+
+  box-shadow:
+    0 0 15px rgba(255, 43, 43, 0.25);
 }
 
 .main-play-btn:hover:not(:disabled) {
   background: var(--red-dark) !important;
-  transform: scale(1.06) !important;
+
+  transform: scale(1.08) !important;
 }
 
 .main-play-btn svg {
@@ -684,144 +739,568 @@ input {
 
 /* =========================================================
    TIME
-   ========================================================= */
+========================================================= */
 
 .player-time {
   min-width: 38px;
+
   color: var(--muted);
+
   font-size: 11px;
+
   text-align: center;
+
   flex-shrink: 0;
 }
 
 /* =========================================================
    PROGRESS
-   ========================================================= */
+========================================================= */
 
 .player-progress {
   width: min(420px, 35vw);
+
   min-width: 100px;
+
   height: 5px;
+
   appearance: none;
   -webkit-appearance: none;
+
   background: #333;
+
   border-radius: 10px;
+
   cursor: pointer;
+
   outline: none;
 }
 
 .player-progress::-webkit-slider-runnable-track {
   height: 5px;
+
   background: #333;
+
   border-radius: 10px;
 }
 
 .player-progress::-webkit-slider-thumb {
   appearance: none;
   -webkit-appearance: none;
+
   width: 13px;
   height: 13px;
+
   margin-top: -4px;
+
   border-radius: 50%;
+
   background: var(--red);
+
   border: 2px solid #111;
+
   cursor: pointer;
-  box-shadow: 0 0 8px rgba(255, 43, 43, 0.5);
 }
 
 .player-progress::-moz-range-track {
   height: 5px;
+
   background: #333;
+
   border-radius: 10px;
 }
 
 .player-progress::-moz-range-progress {
   height: 5px;
+
   background: var(--red);
+
   border-radius: 10px;
 }
 
 .player-progress::-moz-range-thumb {
   width: 13px;
   height: 13px;
+
   border: none;
+
   border-radius: 50%;
+
   background: var(--red);
+
   cursor: pointer;
 }
 
 /* =========================================================
    VOLUME
-   ========================================================= */
+========================================================= */
 
 .volume-control {
   display: flex;
+
   align-items: center;
+
   gap: 8px;
+
   flex-shrink: 0;
+
   color: var(--red);
 }
 
 .volume-control svg {
-  font-size: 14px;
-  color: var(--red);
+  font-size: 15px;
+
   flex-shrink: 0;
 }
 
 .player-volume {
-  width: 78px;
+  width: 75px;
+
   height: 5px;
+
   appearance: none;
   -webkit-appearance: none;
+
   background: #333;
+
   border-radius: 10px;
+
   cursor: pointer;
+
   outline: none;
 }
 
 .player-volume::-webkit-slider-runnable-track {
   height: 5px;
+
   background: #333;
+
   border-radius: 10px;
 }
 
 .player-volume::-webkit-slider-thumb {
   appearance: none;
   -webkit-appearance: none;
+
   width: 12px;
   height: 12px;
+
   margin-top: -3.5px;
+
   border-radius: 50%;
+
   background: var(--red);
+
   border: 2px solid #111;
+
   cursor: pointer;
 }
 
 .player-volume::-moz-range-track {
   height: 5px;
+
   background: #333;
+
   border-radius: 10px;
 }
 
 .player-volume::-moz-range-progress {
   height: 5px;
+
   background: var(--red);
+
   border-radius: 10px;
 }
 
 .player-volume::-moz-range-thumb {
   width: 12px;
   height: 12px;
+
   border: none;
+
   border-radius: 50%;
+
   background: var(--red);
+
   cursor: pointer;
 }
 
+/* Hide native audio */
 .player audio {
   display: none;
 }
 
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .player {
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .player-info {
+    width: 210px;
+    flex-basis: 210px;
+  }
+
+  .player-progress {
+    width: min(300px, 28vw);
+    min-width: 80px;
+  }
+
+  .player-volume {
+    width: 60px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .music-app {
+    grid-template-columns: 180px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) 82px;
+  }
+
+  .player {
+    gap: 8px;
+
+    padding: 8px 12px;
+  }
+
+  .player-info {
+    width: 165px;
+    flex-basis: 165px;
+
+    gap: 8px;
+  }
+
+  .player-cover {
+    width: 48px;
+    height: 48px;
+  }
+
+  .player-progress {
+    min-width: 70px;
+  }
+
+  .custom-player-controls {
+    gap: 6px;
+  }
+
+  .volume-control {
+    display: flex;
+  }
+
+  .player-volume {
+    width: 55px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .music-app {
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 100vh;
+
+    height: auto;
+
+    overflow: visible;
+
+    padding-bottom: 110px;
+  }
+
+  /* ---------------- PLAYER ---------------- */
+
+  .player {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+
+    height: 105px;
+
+    padding: 8px 12px;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    grid-template-rows: 42px 36px;
+
+    column-gap: 10px;
+    row-gap: 5px;
+
+    background: linear-gradient(
+      180deg,
+      rgba(24, 24, 24, 0.99),
+      rgba(8, 8, 8, 0.99)
+    );
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow:
+      0 -8px 25px rgba(0, 0, 0, 0.45);
+
+    z-index: 99999;
+  }
+
+  /* ---------------- SONG INFO ---------------- */
+
+  .player-info {
+    width: 100%;
+
+    min-width: 0;
+
+    flex: none;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    grid-column: 1;
+
+    grid-row: 1;
+  }
+
+  .player-cover {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 7px;
+  }
+
+  .player-text {
+    min-width: 0;
+  }
+
+  .player-text h4 {
+    font-size: 12px;
+  }
+
+  .player-text p {
+    font-size: 10px;
+  }
+
+  /* ---------------- CONTROLS ---------------- */
+
+  .custom-player-controls {
+    width: 100%;
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 6px;
+
+    grid-column: 1 / 3;
+
+    grid-row: 2;
+  }
+
+  .custom-player-controls button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .main-play-btn {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .skip-btn svg {
+    font-size: 11px;
+  }
+
+  .skip-btn span {
+    font-size: 7px;
+  }
+
+  /* ---------------- PROGRESS ---------------- */
+
+  .player-progress {
+    position: absolute;
+
+    left: 12px;
+    right: 12px;
+
+    bottom: 5px;
+
+    width: calc(100% - 24px);
+
+    min-width: 0;
+
+    height: 4px;
+  }
+
+  .player-time {
+    display: none;
+  }
+
+  /* ---------------- VOLUME ---------------- */
+
+  .volume-control {
+    display: flex;
+
+    grid-column: 2;
+
+    grid-row: 1;
+
+    align-self: center;
+
+    gap: 6px;
+  }
+
+  .volume-control svg {
+    font-size: 14px;
+  }
+
+  .player-volume {
+    display: block;
+
+    width: 58px;
+
+    min-width: 58px;
+
+    height: 5px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 500px) {
+
+  .player {
+    height: 108px;
+
+    padding: 8px 10px;
+
+    grid-template-rows: 43px 38px;
+  }
+
+  .player-cover {
+    width: 40px;
+    height: 40px;
+  }
+
+  .player-text h4 {
+    font-size: 11px;
+  }
+
+  .player-text p {
+    display: none;
+  }
+
+  .custom-player-controls {
+    gap: 5px;
+
+    justify-content: center;
+  }
+
+  .custom-player-controls button {
+    width: 31px;
+    height: 31px;
+  }
+
+  .main-play-btn {
+    width: 37px !important;
+    height: 37px !important;
+  }
+
+  .volume-control {
+    gap: 5px;
+  }
+
+  .player-volume {
+    width: 52px;
+    min-width: 52px;
+  }
+
+  .player-progress {
+    left: 10px;
+    right: 10px;
+
+    width: calc(100% - 20px);
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .player {
+    height: 110px;
+
+    padding: 7px 8px;
+  }
+
+  .player-cover {
+    width: 38px;
+    height: 38px;
+  }
+
+  .volume-control svg {
+    font-size: 12px;
+  }
+
+  .player-volume {
+    width: 45px;
+    min-width: 45px;
+  }
+
+  .custom-player-controls {
+    gap: 4px;
+  }
+
+  .custom-player-controls button {
+    width: 29px;
+    height: 29px;
+  }
+
+  .main-play-btn {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .skip-btn span {
+    font-size: 6px;
+  }
+
+}
 /* =========================================================
    FAVORITES
    ========================================================= */
