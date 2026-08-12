@@ -103,6 +103,16 @@ export default function PlaylistPage() {
     }
   };
 
+const handleVolumeChange = (e) => {
+  const value = Number(e.target.value);
+
+  setVolume(value);
+
+  if (audioRef.current) {
+    audioRef.current.volume = value;
+  }
+};
+
   const skip = (seconds) => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -320,8 +330,7 @@ export default function PlaylistPage() {
       max="1"
       step="0.01"
       value={volume}
-        onInput={(e) => setVolume(Number(e.currentTarget.value))}
-      onChange={(e) => setVolume(Number(e.target.value))}
+  onChange={handleVolumeChange}
       disabled={!currentSong}
       aria-label="Volume"
     />
