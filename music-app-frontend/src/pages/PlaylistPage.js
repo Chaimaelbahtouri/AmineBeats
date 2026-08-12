@@ -1,12 +1,5 @@
-import { useEffect, useState, useRef } from "react";
-import {
-  FaPause,
-  FaPlay,
-  FaVolumeUp,
-  FaVolumeMute,
-  FaBackward,
-  FaForward,
-} from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { FaPause, FaPlay, FaBackward, FaForward, FaVolumeUp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
 
@@ -14,10 +7,8 @@ export default function PlaylistPage() {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [activeSongId, setActiveSongId] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-
   const [favorites, setFavorites] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -25,50 +16,15 @@ export default function PlaylistPage() {
 
   const audioRef = useRef(null);
 
-  const currentSong = songs.find(
-    (song) => song._id === activeSongId
-  );
-
-  /* =========================
-     FAVORITES
-  ========================= */
+  const currentSong = songs.find((song) => song._id === activeSongId);
 
   useEffect(() => {
-    const saved =
-      JSON.parse(localStorage.getItem("favorites")) || [];
-
+    const saved = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(saved);
   }, []);
 
-  const toggleFavorite = (song) => {
-    let update;
-
-    const exist = favorites.find(
-      (track) => track._id === song._id
-    );
-
-    if (exist) {
-      update = favorites.filter(
-        (track) => track._id !== song._id
-      );
-    } else {
-      update = [...favorites, song];
-    }
-
-    setFavorites(update);
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify(update)
-    );
-  };
-
-  /* =========================
-     LOAD SONGS
-  ========================= */
-
   useEffect(() => {
-    api
-      .get("/songs")
+    api.get("/songs")
       .then((res) => {
         setSongs(res.data);
         setLoading(false);
@@ -79,167 +35,117 @@ export default function PlaylistPage() {
       });
   }, []);
 
-  /* =========================
-     PLAY SELECTED SONG
-  ========================= */
-
   useEffect(() => {
-    if (!audioRef.current || !currentSong) return;
-
     const audio = audioRef.current;
+    if (!audio || !currentSong) return;
 
     audio.load();
 
-    audio
-      .play()
-      .then(() => {
+    const playAudio = async () => {
+      try {
+        await audio.play();
         setIsPlaying(true);
-      })
-      .catch(() => {
+      } catch {
         setIsPlaying(false);
-      });
+      }
+    };
 
-    setCurrentTime(0);
+    playAudio();
   }, [currentSong]);
 
-  /* =========================
-     PLAY / PAUSE
-  ========================= */
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
 
-  const handleClick = async (songId) => {
+  const toggleFavorite = (song) => {
+    let updated;
+
+    const exists = favorites.find((track) => track._id === song._id);
+
+    if (exists) {
+      updated = favorites.filter((track) => track._id !== song._id);
+    } else {
+      updated = [...favorites, song];
+    }
+
+    setFavorites(updated);
+    localStorage.setItem("favorites", JSON.stringify(updated));
+  };
+
+  const handleClick = (songId) => {
     const audio = audioRef.current;
-
     if (!audio) return;
 
     if (activeSongId === songId) {
       if (audio.paused) {
-        try {
-          await audio.play();
-        } catch {
-          setIsPlaying(false);
-        }
+        audio.play().then(() => setIsPlaying(true)).catch(() => {});
       } else {
         audio.pause();
+        setIsPlaying(false);
       }
-
       return;
     }
 
     setActiveSongId(songId);
   };
 
-  /* =========================
-     AUDIO EVENTS
-  ========================= */
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio || !currentSong) return;
 
-  const handlePlay = () => {
-    setIsPlaying(true);
+    if (audio.paused) {
+      audio.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      audio.pause();
+      setIsPlaying(false);
+    }
   };
 
-  const handlePause = () => {
-    setIsPlaying(false);
-  };
+  const skip = (seconds) => {
+    const audio = audioRef.current;
+    if (!audio) return;
 
-  const handleEnded = () => {
-    setIsPlaying(false);
-    setCurrentTime(0);
+    audio.currentTime = Math.max(
+      0,
+      Math.min(audio.duration || 0, audio.currentTime + seconds)
+    );
   };
 
   const handleTimeUpdate = () => {
-    if (!audioRef.current) return;
-
-    setCurrentTime(audioRef.current.currentTime);
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
   };
 
   const handleLoadedMetadata = () => {
-    if (!audioRef.current) return;
-
-    setDuration(audioRef.current.duration || 0);
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration || 0);
+    }
   };
-
-  /* =========================
-     SKIP
-  ========================= */
-
-  const skipBackward = () => {
-    if (!audioRef.current) return;
-
-    audioRef.current.currentTime = Math.max(
-      0,
-      audioRef.current.currentTime - 10
-    );
-  };
-
-  const skipForward = () => {
-    if (!audioRef.current) return;
-
-    audioRef.current.currentTime = Math.min(
-      duration,
-      audioRef.current.currentTime + 10
-    );
-  };
-
-  /* =========================
-     PROGRESS
-  ========================= */
 
   const handleProgressChange = (e) => {
-    if (!audioRef.current) return;
-
+    const audio = audioRef.current;
     const value = Number(e.target.value);
 
-    audioRef.current.currentTime = value;
+    if (!audio) return;
+
+    audio.currentTime = value;
     setCurrentTime(value);
   };
 
-  /* =========================
-     VOLUME
-  ========================= */
-
-  const handleVolumeChange = (e) => {
-    if (!audioRef.current) return;
-
-    const value = Number(e.target.value);
-
-    audioRef.current.volume = value;
-    setVolume(value);
-  };
-
-  const toggleMute = () => {
-    if (!audioRef.current) return;
-
-    if (audioRef.current.volume > 0) {
-      audioRef.current.volume = 0;
-      setVolume(0);
-    } else {
-      audioRef.current.volume = 1;
-      setVolume(1);
-    }
-  };
-
-  /* =========================
-     FORMAT TIME
-  ========================= */
-
   const formatTime = (time) => {
-    if (!time || Number.isNaN(time)) {
-      return "0:00";
-    }
+    if (!Number.isFinite(time)) return "0:00";
 
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
 
-    return `${minutes}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
   if (loading) {
-    return (
-      <div className="playlist-loading">
-        Loading songs...
-      </div>
-    );
+    return <div className="playlist-loading">Loading songs...</div>;
   }
 
   if (error) {
@@ -253,53 +159,31 @@ export default function PlaylistPage() {
 
   return (
     <div id="music" className="music-app">
-
-      {/* SIDEBAR */}
-
       <aside className="sidebar">
         <h2 className="logo">AminBeats</h2>
 
         <nav className="menu">
-          <Link to="/favorites">
-            Favorites
-          </Link>
+          <Link to="/favorites">Favorites</Link>
         </nav>
       </aside>
 
-      {/* MAIN */}
-
       <main className="main">
-
         <header className="topbar">
           <h1>PLAYLIST</h1>
-
-          <p>
-            AminBeats brings you handpicked playlists
-            for every mood.
-          </p>
+          <p>AminBeats brings you handpicked playlists for every mood.</p>
         </header>
 
         <section className="playlist-list">
-
           {songs.map((song, index) => (
-
             <div
               key={song._id}
               className={`playlist-row ${
-                activeSongId === song._id
-                  ? "active"
-                  : ""
+                activeSongId === song._id ? "active" : ""
               }`}
               onClick={() => handleClick(song._id)}
             >
-
-              {/* LEFT */}
-
               <div className="row-left">
-
-                <span className="index">
-                  {index + 1}
-                </span>
+                <span className="index">{index + 1}</span>
 
                 <img
                   src={
@@ -315,22 +199,18 @@ export default function PlaylistPage() {
                   <h3>{song.title}</h3>
                   <p>{song.artist}</p>
                 </div>
-
               </div>
 
-              {/* RIGHT */}
-
               <div className="row-right">
-
                 <button
                   className="play-btn"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleClick(song._id);
                   }}
+                  aria-label={activeSongId === song._id && isPlaying ? "Pause" : "Play"}
                 >
-                  {activeSongId === song._id &&
-                  isPlaying ? (
+                  {activeSongId === song._id && isPlaying ? (
                     <FaPause className="icon-small" />
                   ) : (
                     <FaPlay className="icon-small" />
@@ -339,44 +219,32 @@ export default function PlaylistPage() {
 
                 <button
                   className={`favorite-btn ${
-                    favorites.find(
-                      (t) => t._id === song._id
-                    )
-                      ? "active"
-                      : ""
+                    favorites.find((t) => t._id === song._id) ? "active" : ""
                   }`}
                   onClick={(e) => {
                     e.stopPropagation();
                     toggleFavorite(song);
                   }}
+                  aria-label="Favorite"
                 >
-                  {favorites.find(
-                    (t) => t._id === song._id
-                  )
-                    ? "❤️"
-                    : "🤍"}
+                  {favorites.find((t) => t._id === song._id) ? "❤️" : "🤍"}
                 </button>
-
               </div>
-
             </div>
-
           ))}
-
         </section>
-
       </main>
 
-      {/* AUDIO PLAYER */}
-
       <footer className="player">
-
         <div className="player-info">
-
           {currentSong ? (
             <>
               <img
-                src={currentSong.coverImage}
+                src={
+                  currentSong.coverImage?.startsWith("http")
+                    ? currentSong.coverImage
+                    : `https://music-app-backend-self.vercel.app/images/${currentSong.coverImage}`
+                }
                 alt={currentSong.title}
                 className="player-cover"
               />
@@ -389,88 +257,56 @@ export default function PlaylistPage() {
           ) : (
             <p>No song selected</p>
           )}
-
         </div>
 
-        {/* REAL AUDIO ELEMENT */}
+        <div className="custom-player-controls">
+          <button
+            className="skip-btn"
+            onClick={() => skip(-10)}
+            disabled={!currentSong}
+            aria-label="Back 10 seconds"
+          >
+            <FaBackward />
+            <span>10</span>
+          </button>
 
-        <audio
-          ref={audioRef}
-          src={currentSong?.musicUrl || ""}
-          onPlay={handlePlay}
-          onPause={handlePause}
-          onEnded={handleEnded}
-          onTimeUpdate={handleTimeUpdate}
-          onLoadedMetadata={handleLoadedMetadata}
-          preload="metadata"
-        />
+          <button
+            className="main-play-btn"
+            onClick={togglePlay}
+            disabled={!currentSong}
+            aria-label={isPlaying ? "Pause" : "Play"}
+          >
+            {isPlaying ? <FaPause /> : <FaPlay />}
+          </button>
 
-        {/* CUSTOM CONTROLS */}
+          <button
+            className="skip-btn"
+            onClick={() => skip(10)}
+            disabled={!currentSong}
+            aria-label="Forward 10 seconds"
+          >
+            <FaForward />
+            <span>10</span>
+          </button>
 
-        {currentSong && (
-          <div className="custom-player-controls">
+          <span className="player-time">{formatTime(currentTime)}</span>
 
-            <button
-              type="button"
-              onClick={skipBackward}
-              title="Back 10 seconds"
-            >
-              <FaBackward />
-              <span>10</span>
-            </button>
+          <input
+            className="player-progress"
+            type="range"
+            min="0"
+            max={duration || 0}
+            step="0.1"
+            value={Math.min(currentTime, duration || 0)}
+            onChange={handleProgressChange}
+            disabled={!currentSong || !duration}
+            aria-label="Song progress"
+          />
 
-            <button
-              type="button"
-              className="main-play-btn"
-              onClick={() =>
-                handleClick(currentSong._id)
-              }
-            >
-              {isPlaying ? (
-                <FaPause />
-              ) : (
-                <FaPlay />
-              )}
-            </button>
+          <span className="player-time">{formatTime(duration)}</span>
 
-            <button
-              type="button"
-              onClick={skipForward}
-              title="Forward 10 seconds"
-            >
-              <FaForward />
-              <span>10</span>
-            </button>
-
-            <span className="player-time">
-              {formatTime(currentTime)}
-            </span>
-
-            <input
-              className="player-progress"
-              type="range"
-              min="0"
-              max={duration || 0}
-              value={currentTime}
-              onChange={handleProgressChange}
-            />
-
-            <span className="player-time">
-              {formatTime(duration)}
-            </span>
-
-            <button
-              type="button"
-              onClick={toggleMute}
-              title="Volume"
-            >
-              {volume === 0 ? (
-                <FaVolumeMute />
-              ) : (
-                <FaVolumeUp />
-              )}
-            </button>
-
+          <div className="volume-control">
+            <FaVolumeUp />
             <input
               className="player-volume"
               type="range"
@@ -478,14 +314,30 @@ export default function PlaylistPage() {
               max="1"
               step="0.01"
               value={volume}
-              onChange={handleVolumeChange}
+              onChange={(e) => setVolume(Number(e.target.value))}
+              disabled={!currentSong}
+              aria-label="Volume"
             />
-
           </div>
-        )}
+        </div>
 
+        <audio
+          ref={audioRef}
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => {
+            setIsPlaying(false);
+            setCurrentTime(0);
+          }}
+          preload="metadata"
+        >
+          {currentSong && (
+            <source src={currentSong.musicUrl} type="audio/mpeg" />
+          )}
+        </audio>
       </footer>
-
     </div>
   );
 }
